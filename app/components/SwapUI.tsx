@@ -57,16 +57,16 @@ export function SwapUI({ market }: {market: string}) {
                             <p className="font-medium pr-2 text-xs text-base-text-med-emphasis">≈ 0.00 USDC</p>
                         </div>
                         <div className="flex justify-center flex-row mt-2 gap-3">
-                            <div className="flex items-center justify-center flex-row rounded-full px-[16px] py-[6px] text-xs cursor-pointer bg-base-background-l2 hover:bg-base-background-l3">
+                            <div className="flex items-center justify-center flex-row rounded-full py-1.5 text-xs cursor-pointer bg-base-background-l2 hover:bg-base-background-l3">
                                 25%
                             </div>
-                            <div className="flex items-center justify-center flex-row rounded-full px-[16px] py-[6px] text-xs cursor-pointer bg-base-background-l2 hover:bg-base-background-l3">
+                            <div className="flex items-center justify-center flex-row rounded-full py-1.5 text-xs cursor-pointer bg-base-background-l2 hover:bg-base-background-l3">
                                 50%
                             </div>
-                            <div className="flex items-center justify-center flex-row rounded-full px-[16px] py-[6px] text-xs cursor-pointer bg-base-background-l2 hover:bg-base-background-l3">
+                            <div className="flex items-center justify-center flex-row rounded-full py-1.5 text-xs cursor-pointer bg-base-background-l2 hover:bg-base-background-l3">
                                 75%
                             </div>
-                            <div className="flex items-center justify-center flex-row rounded-full px-[16px] py-[6px] text-xs cursor-pointer bg-base-background-l2 hover:bg-base-background-l3">
+                            <div className="flex items-center justify-center flex-row rounded-full py-1.5 text-xs cursor-pointer bg-base-background-l2 hover:bg-base-background-l3">
                                 Max
                             </div>
                         </div>
@@ -107,7 +107,7 @@ function MarketButton({ type, setType }: { type: string, setType: any }) {
 }
 
 function BuyButton({ activeTab, setActiveTab }: { activeTab: string, setActiveTab: any }) {
-    return <div className={`flex flex-col mb-[-2px] flex-1 cursor-pointer justify-center border-b-2 p-4 ${activeTab === 'buy' ? 'border-b-green-border bg-green-background-transparent' : 'border-b-base-border-med hover:border-b-base-border-focus'}`} onClick={() => setActiveTab('buy')}>
+    return <div className={`flex flex-col -mb-0.5 flex-1 cursor-pointer justify-center border-b-2 p-4 ${activeTab === 'buy' ? 'border-b-green-border bg-green-background-transparent' : 'border-b-base-border-med hover:border-b-base-border-focus'}`} onClick={() => setActiveTab('buy')}>
         <p className="text-center text-sm font-semibold text-green-text">
             Buy
         </p>
@@ -115,7 +115,7 @@ function BuyButton({ activeTab, setActiveTab }: { activeTab: string, setActiveTa
 }
 
 function SellButton({ activeTab, setActiveTab }: { activeTab: string, setActiveTab: any }) {
-    return <div className={`flex flex-col mb-[-2px] flex-1 cursor-pointer justify-center border-b-2 p-4 ${activeTab === 'sell' ? 'border-b-red-border bg-red-background-transparent' : 'border-b-base-border-med hover:border-b-base-border-focus'}`} onClick={() => setActiveTab('sell')}>
+    return <div className={`flex flex-col -mb-0.5 flex-1 cursor-pointer justify-center border-b-2 p-4 ${activeTab === 'sell' ? 'border-b-red-border bg-red-background-transparent' : 'border-b-base-border-med hover:border-b-base-border-focus'}`} onClick={() => setActiveTab('sell')}>
         <p className="text-center text-sm font-semibold text-red-text">
             Sell
         </p>

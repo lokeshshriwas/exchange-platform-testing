@@ -1,3 +1,5 @@
+// Bids come in decreasing order from the server
+
 
 export const BidTable = ({ bids }: {bids: [string, string][]}) => {
     let currentTotal = 0; 

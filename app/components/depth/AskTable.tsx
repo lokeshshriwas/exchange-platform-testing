@@ -1,53 +1,45 @@
+// Asks come in increasing order from the server
 
 export const AskTable = ({ asks }: { asks: [string, string][] }) => {
     let currentTotal = 0;
     const relevantAsks = asks.slice(0, 15);
+    
     /*
+     * Initial asks (lowest to highest price):
      * 129.93 10
      * 129.94 5
      * 132.96 3
      * 132.97 253.03 
      */
-    relevantAsks.reverse();
-    /*
-     * 132.97 253.03     270
-     * 132.96 3    18
-     * 129.94 5    15
-     * 129.93 10   10
-     */
 
+    /*
+     * After calculating cumulative totals (lowest to highest):
+     * 129.93 10      10    (0 + 10)
+     * 129.94 5       15    (10 + 5)
+     * 132.96 3       18    (15 + 3)
+     * 132.97 253.03  271   (18 + 253.03)
+     */
     let asksWithTotal: [string, string, number][] = [];
-    for (let i = relevantAsks.length - 1; i>=0; i--)  {
+    for (let i = 0; i < relevantAsks.length; i++)  {
         const [price, quantity] = relevantAsks[i];
         asksWithTotal.push([price, quantity, currentTotal += Number(quantity)]);
     }
+    
     const maxTotal = relevantAsks.reduce((acc, [_, quantity]) => acc + Number(quantity), 0);
 
-     /*
-     *    129.93 10   10
-
-     * 129.94 5    15
-     * 132.96 3    18
-     * 132.97 253.03     270
+    /*
+     * After reversing (highest to lowest price):
+     * 132.97 253.03  271
+     * 132.96 3       18
+     * 129.94 5       15
+     * 129.93 10      10
      */
     asksWithTotal.reverse();
-         /*
-         * 132.97 253.03     270
-         * 132.96 3    18
-         * * 129.94 5    15
-     *    129.93 10   10
-
-     */
 
     return <div>
         {asksWithTotal.map(([price, quantity, total]) => <Ask maxTotal={maxTotal} key={price} price={price} quantity={quantity} total={total} />)}
     </div>
 }
-
-
-
-
-
 
 
 
