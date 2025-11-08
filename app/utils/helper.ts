@@ -1,0 +1,33 @@
+import cname from "../../public/assets/cname.json";
+
+// types 
+
+
+interface CryptoEntry {
+  symbol: string;
+  name: string;
+}
+
+
+// functions 
+
+export const formatNumber = (num: any): string => {
+  const value = Number(num);
+  if (isNaN(value)) return "-";
+
+  if (value < 1000) return value.toFixed(2);
+  if (value < 1_000_000) return `${(value / 1_000).toFixed(1)}K`;
+  if (value < 1_000_000_000) return `${(value / 1_000_000).toFixed(1)}M`;
+  return `${(value / 1_000_000_000).toFixed(1)}B`;
+};
+
+export const getFullName = (symbol: string): string | null => {
+  const entry = (cname as CryptoEntry[]).find(
+    (x) => x.symbol.toUpperCase() === trimString(symbol)?.toUpperCase()
+  );
+  return entry ? entry.name : null;
+};
+
+export const trimString = (symbol : string):  string | null => {
+    return symbol.split("_")[0].toLowerCase() || null;
+}
