@@ -1,5 +1,6 @@
 import { formatNumber, getFullName, trimString } from "@/app/utils/helper";
 import React from "react";
+import LineChart from "./LineChart";
 
 const Table = ({ tableData }: { tableData: any }) => {
   return (
@@ -44,7 +45,7 @@ const Table = ({ tableData }: { tableData: any }) => {
           {tableData
             ?.filter((item: any) => !item.symbol.endsWith("PERP"))
             .map((item: any) => (
-              <tr className="group hover:bg-base-background-l2 cursor-pointer">
+              <tr className="group hover:bg-base-background-l2 cursor-pointer"  key={item?.symbol}>
                 <td className="text-sm tabular-nums px-2 py-3 last:pr-7">
                   <a
                     className="flex shrink whitespace-nowrap"
@@ -96,7 +97,7 @@ const Table = ({ tableData }: { tableData: any }) => {
                 </td>
                 <td className="text-sm tabular-nums px-2 py-3 last:pr-7 text-right">
                   <div className="flex justify-end">
-                    <div className="relative cursor-default w-[100px] h-5"></div>
+                      <LineChart data={item?.klines[0].data} />
                   </div>
                 </td>
               </tr>

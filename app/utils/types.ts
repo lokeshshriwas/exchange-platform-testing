@@ -47,3 +47,13 @@ export interface Tradetype {
   timestamp: number;
   quoteQuantity: string;
 }
+
+export interface CandleData {
+  close: string;     
+  end: string;      
+}
+
+export interface SymbolData {
+  symbol: string;    
+  data: CandleData[];
+}

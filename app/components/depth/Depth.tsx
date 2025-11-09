@@ -12,7 +12,7 @@ import { AskTable } from "./AskTable";
 import { SignalingManager } from "@/app/utils/SignalingManager";
 import DepthHeader from "./DepthHeader";
 import { TradeTable } from "./TradeTable";
-import { Tradetype } from "@/app/utils/types";
+import { Ticker, Tradetype } from "@/app/utils/types";
 
 export function Depth({ market }: { market: string }) {
   const [bids, setBids] = useState<[string, string][]>();
@@ -104,7 +104,7 @@ export function Depth({ market }: { market: string }) {
       `DEPTH-${market}`
     );
 
-     // Subscribe to the trade channel
+    // Subscribe to the trade channel
     SignalingManager.getInstance().registerCallback(
       "trade",
       (data: any) => {
@@ -113,22 +113,31 @@ export function Depth({ market }: { market: string }) {
           let updatedTrades = [...originalTrades];
 
           // Step 2: For each incoming trade
-            const existingIndex = updatedTrades.findIndex((t) => t.id === data.id);
+          const existingIndex = updatedTrades.findIndex(
+            (t) => t.id === data.id
+          );
 
-            if (existingIndex !== -1) {
-              // Case 1: Trade already exists → update it
-              updatedTrades[existingIndex] = data;
-            } else {
-              // Case 2: Trade does NOT exist → add it and remove the last one
-              updatedTrades.pop();
-              updatedTrades = [data, ...updatedTrades];
-            }
-          
+          if (existingIndex !== -1) {
+            // Case 1: Trade already exists → update it
+            updatedTrades[existingIndex] = data;
+          } else {
+            // Case 2: Trade does NOT exist → add it and remove the last one
+            updatedTrades.pop();
+            updatedTrades = [data, ...updatedTrades];
+          }
+
           return updatedTrades;
         });
-
       },
       `trade-${market}`
+    );
+
+    // Accessing pre-subscribed price data from ticker channel
+    SignalingManager.getInstance().registerCallback(
+      "ticker",
+      (data: Partial<Ticker>) =>
+        setPrice((prevPrice) => data?.lastPrice ?? prevPrice ?? ""),
+      `ticker-${market}`
     );
 
     SignalingManager.getInstance().sendMessage({
@@ -157,7 +166,6 @@ export function Depth({ market }: { market: string }) {
         "trade",
         `TRADE-${market}`
       );
-      
     };
   }, [market]);
 

@@ -4,10 +4,12 @@ import { usePathname } from "next/navigation";
 import { PrimaryButton, SuccessButton } from "./core/Button"
 import { useRouter } from "next/navigation";
 import { CiSearch } from "react-icons/ci";
+import { useState } from "react";
 
 export const Appbar = () => {
     const route = usePathname();
     const router = useRouter()
+    const [value, setValue ] = useState('');
 
     return (
         <div className="relative flex h-14 w-full flex-col justify-center">
@@ -26,7 +28,8 @@ export const Appbar = () => {
                             <div className="mx-2">
                                 <CiSearch className="text-slate-500"/>
                             </div>
-                            <input aria-label="Search markets" aria-autocomplete="list" placeholder="Search markets" id="react-aria961467334-«rb»" role="combobox" aria-expanded="false" className="bg-base-background-l2 text-high-emphasis placeholder-low-emphasis h-8 w-full border-0 p-0 text-sm font-normal outline-hidden focus:ring-0" type="text" value=""/>
+                            <input aria-label="Search markets" aria-autocomplete="list" placeholder="Search markets" id="react-aria961467334-«rb»" role="combobox" aria-expanded="false" className="bg-base-background-l2 text-high-emphasis placeholder-low-emphasis h-8 w-full border-0 p-0 text-sm font-normal outline-hidden focus:ring-0" type="text" value={value}
+                            onChange={(e)=> setValue(e.target.value)}/>
                         </div>
                     </div>
                 </div>

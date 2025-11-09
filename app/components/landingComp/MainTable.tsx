@@ -3,13 +3,23 @@
 import { useEffect, useState } from "react";
 import MainTableHeader from "./MainTableHeader";
 import Table from "./Table";
-import { getTickers } from "@/app/utils/httpClient";
+import { getTickers, marketDataKlines } from "@/app/utils/httpClient";
 
 const MainTable = () => {  
     const [tableData, setTableData] = useState([]);
 
     useEffect(()=>{
-        getTickers().then(data => setTableData(data.sort((a: any, b: any) => b.lastPrice - a.lastPrice) as any))
+      const tickerData =  getTickers().then(data => (data.sort((a: any, b: any) => b.lastPrice - a.lastPrice) as any)) 
+      const klineData = marketDataKlines().then(data => data)
+
+      Promise.all([tickerData, klineData]).then(([tickers, klines]) => {
+        const tickersWithKlines = tickers.map((ticker: any) => ({
+          ...ticker,
+          klines: klines.filter((kline: any) => kline.symbol === ticker.symbol),
+        }));
+        setTableData(tickersWithKlines);
+      })
+
     }, [])
 
   return (

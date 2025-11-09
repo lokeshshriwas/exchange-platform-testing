@@ -1,7 +1,9 @@
 import axios from "axios";
-import { Depth, KLine, Ticker, Trade } from "./types";
+import { Depth, KLine, SymbolData, Ticker, Trade } from "./types";
+import { getStartAndEndTime } from "./helper";
 
 const BASE_URL = "http://localhost:8080/api/v1";
+const BASE_URL_S = "http://localhost:8080"
 
 // Fixed: Returns Ticker[] (array), not Ticker (single object)
 export async function getTickers(): Promise<Ticker[]> {
@@ -37,4 +39,12 @@ export async function getKlines(market: string, interval: string, startTime: num
 export async function getMarkets(): Promise<string[]> {
     const response = await axios.get(`${BASE_URL}/markets`);
     return response.data;
+}
+
+
+export async function marketDataKlines(): Promise<SymbolData[]> {
+    const { startTime, endTime } = getStartAndEndTime(7, 1);
+    const response = await axios.get(`${BASE_URL_S}/wapi/v1/marketDataKlines?interval=6h&startTime=${startTime}&endTime=${endTime}`);
+    const data: SymbolData[] = response.data;
+    return data;
 }

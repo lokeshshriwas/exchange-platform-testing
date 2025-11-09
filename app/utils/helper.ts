@@ -31,3 +31,10 @@ export const getFullName = (symbol: string): string | null => {
 export const trimString = (symbol : string):  string | null => {
     return symbol.split("_")[0].toLowerCase() || null;
 }
+
+export const  getStartAndEndTime = (daysAgo: number = 7, hoursAgo: number = 1) => {
+  const endTime = Math.floor(Date.now() / 1000);
+  const secondsAgo = daysAgo * 24 * 60 * 60 + hoursAgo * 60 * 60;
+  const startTime = endTime - secondsAgo;
+  return { startTime, endTime };
+}
