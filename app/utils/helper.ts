@@ -38,3 +38,20 @@ export const  getStartAndEndTime = (daysAgo: number = 7, hoursAgo: number = 1) =
   const startTime = endTime - secondsAgo;
   return { startTime, endTime };
 }
+
+
+export const getTopGainers = (tableData : any)=>{
+  const top5gainers =  tableData.sort((a: any, b: any) => b.priceChangePercent - a.priceChangePercent);
+  return top5gainers.slice(0, 5);
+}
+
+export const exploreNew = (tableData : any)=> {
+  // pick randome 5 cryptos
+  const exploreNew = tableData.sort(() => Math.random() - 0.5);
+  return exploreNew.slice(0, 5);
+}
+
+export const mostPopular = (tableData : any)=>{
+  const mostPopular =  tableData.sort((a: any, b: any) => b.volume - a.volume);
+  return mostPopular.slice(0, 5);
+}
